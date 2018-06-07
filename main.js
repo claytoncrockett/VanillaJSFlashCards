@@ -1,9 +1,36 @@
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+
+
 let questions = ["What does const do?", "What does the fat arrow do?", "What does 'this' do?"]
 let answers = ["sets a variable that can't be changed", "declares methods", "grabs closest parent method"]
 let i = -1
 document.getElementById('front').addEventListener("click", toggleCard);
 document.getElementById('back').addEventListener("click", toggleCard);
 document.getElementById('nextCard').addEventListener("click", nextCard);
+document.getElementById('submit').addEventListener("click", addCard);
+document.getElementById('delete').addEventListener("click", deleteCard);
+
+
+
+function deleteCard(){
+  questions.remove(i)
+  answers.remove(i)
+  nextCard()
+}
+
+function addCard(){
+  question = document.getElementById('question').value
+  answer = document.getElementById('answer').value
+  questions.push(`${question}`)
+  answers.push(`${answer}`)
+  document.getElementById('question').value = ""
+  document.getElementById('answer').value = ""
+}
+
 
 function nextCard(){
   if (document.getElementById('front').classList.contains('hide')){
